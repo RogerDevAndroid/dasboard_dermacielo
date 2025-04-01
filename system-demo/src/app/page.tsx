@@ -1,3 +1,7 @@
+import { createClient } from '@supabase/supabase-js';
+const supabaseUrl = 'https://mkmrhuckumpnfhcwowfq.supabase.co'; // Replace with your Supabase URL
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rbXJodWNrdW1wbmZoY3dvd2ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjI2MTAsImV4cCI6MjA1OTAzODYxMH0.VXjTukYimBCd0vYCy1eyOvCXWoDzO8Sx3pCZmqhGyKQ'; // Replace with your Supabase public API key
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 import { Button } from "@/components/ui/button";
 import {
   Card,

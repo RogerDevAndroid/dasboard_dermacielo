@@ -1,8 +1,14 @@
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabaseUrl = 'https://mkmrhuckumpnfhcwowfq.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rbXJodWNrdW1wbmZoY3dvd2ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM0NjI2MTAsImV4cCI6MjA1OTAzODYxMH0.VXjTukYimBCd0vYCy1eyOvCXWoDzO8Sx3pCZmqhGyKQ';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 // Data storage
-let clients = JSON.parse(localStorage.getItem('clients')) || [];
-let products = JSON.parse(localStorage.getItem('products')) || [];
-let services = JSON.parse(localStorage.getItem('services')) || [];
-let sales = JSON.parse(localStorage.getItem('sales')) || [];
+let clients = [];
+let products = [];
+let services = [];
 
 // Sincroniza los datos entre las diferentes partes del sistema
 function syncDataAcrossModules() {
