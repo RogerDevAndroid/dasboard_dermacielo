@@ -292,8 +292,9 @@ function initDocuments() {
         localStorage.setItem('documents', JSON.stringify(documents));
     }
 
-    // Render documents table
+    // Render documents table and document mosaic
     renderDocumentsTable();
+    renderDocumentMosaic();
 
     // Setup search functionality
     const searchInput = document.getElementById('searchDocument');
@@ -302,5 +303,25 @@ function initDocuments() {
     }
 }
 
-// Initialize when document loads
+function renderDocumentMosaic(docsToRender = documents) {
+    const mosaic = document.getElementById('documentMosaic');
+    if (mosaic) {
+        mosaic.innerHTML = docsToRender.length > 0 ?
+            docsToRender.map(doc => `
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="${getDocumentIcon(doc.type)} text-3xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h5 class="text-lg font-medium text-gray-900">${doc.name}</h5>
+                            <a href="${doc.url}" target="_blank" class="text-blue-600 hover:underline">Ver documento</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('') :
+            `<p class="text-sm text-gray-500">No hay documentos disponibles</p>`;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', initDocuments);
