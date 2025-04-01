@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dermacielo - Gestión de Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="bg-white w-64 border-r border-gray-200 min-h-screen">
+            <div class="p-4 border-b">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-clinic-medical text-blue-600 text-2xl"></i>
+                    <h1 class="text-xl font-semibold text-gray-900">Dermacielo</h1>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="dashboard.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-gauge-high w-5 h-5 mr-2 text-gray-500"></i>
+                    Dashboard
+                </a>
+                <a href="roles.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user-shield w-5 h-5 mr-2 text-gray-500"></i>
+                    Roles
+                </a>
+                <a href="users.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg">
+                    <i class="fas fa-users w-5 h-5 mr-2"></i>
+                    Usuarios
+                </a>
+                <a href="documents.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-file-alt w-5 h-5 mr-2 text-gray-500"></i>
+                    Documentos
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-calendar w-5 h-5 mr-2 text-gray-500"></i>
+                    Citas
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user w-5 h-5 mr-2 text-gray-500"></i>
+                    Pacientes
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-shopping-cart w-5 h-5 mr-2 text-gray-500"></i>
+                    Ventas
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Gestión de Usuarios</h2>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                                <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="Admin" class="w-8 h-8 rounded-full">
+                                <span>Admin</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Users Content -->
+            <div class="p-6">
+                <!-- Actions Bar -->
+                <div class="mb-6 flex justify-between items-center">
+                    <div class="flex space-x-4">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input type="text" id="searchUser" placeholder="Buscar usuarios..."
+                                   class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        </div>
+                        <select id="roleFilter" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                            <option value="">Todos los roles</option>
+                            <!-- Roles will be dynamically inserted here -->
+                        </select>
+                        <select id="sucursalFilter" class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                            <option value="">Todas las sucursales</option>
+                            <!-- Sucursales will be dynamically inserted here -->
+                        </select>
+                    </div>
+                    <button onclick="showModal('createUserModal')"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+                        <i class="fas fa-plus mr-2"></i>
+                        Nuevo Usuario
+                    </button>
+                </div>
+
+                <!-- Users Table -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Usuario
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Rol
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Sucursal
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Estado
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Último Acceso
+                                </th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Users will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create User Modal -->
+    <div id="createUserModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900" id="userModalTitle">Nuevo Usuario</h3>
+                <button onclick="hideModal('createUserModal')" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="userForm" onsubmit="handleUserSubmit(event)">
+                <input type="hidden" id="userId" value="">
+
+                <div class="mb-4">
+                    <label for="userName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <input type="text" id="userName" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userLastName" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                    <input type="text" id="userLastName" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="userEmail" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div id="passwordField" class="mb-4">
+                    <label for="userPassword" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                    <input type="password" id="userPassword"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userRole" class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                    <select id="userRole" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="">Seleccione un rol</option>
+                        <!-- Roles will be dynamically inserted here -->
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="userSucursal" class="block text-sm font-medium text-gray-700 mb-1">Sucursal</label>
+                    <select id="userSucursal" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="">Seleccione una sucursal</option>
+                        <!-- Sucursales will be dynamically inserted here -->
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="userStatus" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="userStatus" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="hideModal('createUserModal')"
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal (using the same form) -->
+    <div id="editUserModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900" id="userModalTitle">Editar Usuario</h3>
+                <button onclick="hideModal('editUserModal')" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="userForm" onsubmit="handleUserSubmit(event)">
+                <input type="hidden" id="userId" value="">
+
+                <div class="mb-4">
+                    <label for="userName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <input type="text" id="userName" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userLastName" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                    <input type="text" id="userLastName" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="userEmail" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div id="passwordField" class="mb-4">
+                    <label for="userPassword" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                    <input type="password" id="userPassword" placeholder="Dejar vacío para mantener la actual"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                </div>
+
+                <div class="mb-4">
+                    <label for="userRole" class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                    <select id="userRole" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="">Seleccione un rol</option>
+                        <!-- Roles will be dynamically inserted here -->
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="userSucursal" class="block text-sm font-medium text-gray-700 mb-1">Sucursal</label>
+                    <select id="userSucursal" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="">Seleccione una sucursal</option>
+                        <!-- Sucursales will be dynamically inserted here -->
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="userStatus" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select id="userStatus" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        <option value="active">Activo</option>
+                        <option value="inactive">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="hideModal('editUserModal')"
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div id="deleteUserModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">Eliminar Usuario</h3>
+                <button onclick="hideModal('deleteUserModal')" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="mb-4 text-gray-600">¿Está seguro que desea eliminar este usuario? Esta acción no se puede deshacer.</p>
+            <input type="hidden" id="deleteUserId" value="">
+            <div class="mt-6 flex justify-end space-x-3">
+                <button onclick="hideModal('deleteUserModal')"
+                        class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                    Cancelar
+                </button>
+                <button onclick="deleteUser()"
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/users.js"></script>
+</body>
+</html>

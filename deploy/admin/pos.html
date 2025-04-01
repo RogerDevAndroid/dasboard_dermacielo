@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dermacielo - Punto de Venta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="bg-white w-64 border-r border-gray-200 min-h-screen">
+            <div class="p-4 border-b">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-clinic-medical text-blue-600 text-2xl"></i>
+                    <h1 class="text-xl font-semibold text-gray-900">Dermacielo</h1>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="dashboard.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-gauge-high w-5 h-5 mr-2 text-gray-500"></i>
+                    Dashboard
+                </a>
+                <a href="roles.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user-shield w-5 h-5 mr-2 text-gray-500"></i>
+                    Roles
+                </a>
+                <a href="users.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-users w-5 h-5 mr-2 text-gray-500"></i>
+                    Usuarios
+                </a>
+                <a href="documents.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-file-alt w-5 h-5 mr-2 text-gray-500"></i>
+                    Documentos
+                </a>
+                <a href="services.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-spa w-5 h-5 mr-2 text-gray-500"></i>
+                    Servicios
+                </a>
+                <a href="products.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-pump-soap w-5 h-5 mr-2 text-gray-500"></i>
+                    Productos
+                </a>
+                <a href="clients.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user-friends w-5 h-5 mr-2 text-gray-500"></i>
+                    Clientes
+                </a>
+                <a href="records.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-folder-open w-5 h-5 mr-2 text-gray-500"></i>
+                    Expedientes
+                </a>
+                <a href="expenses.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-receipt w-5 h-5 mr-2 text-gray-500"></i>
+                    Gastos
+                </a>
+                <a href="pos.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg">
+                    <i class="fas fa-cash-register w-5 h-5 mr-2"></i>
+                    Punto de Venta
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <h2 class="text-xl font-semibold text-gray-800">Punto de Venta</h2>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                                <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="Admin" class="w-8 h-8 rounded-full">
+                                <span>Admin</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- POS Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+                <!-- Left Column: Client Selection & Categories -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Client Selection -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Seleccionar Cliente</h3>
+                        <div class="flex gap-4">
+                            <div class="flex-1 relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                                <input type="text" id="clientSearch" placeholder="Buscar cliente por nombre o teléfono..."
+                                       class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                            </div>
+                            <button id="newClientBtn" onclick="showModal('createClientModal')"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-plus mr-2"></i>
+                                Nuevo Cliente
+                            </button>
+                        </div>
+                        <div id="clientSearchResults" class="mt-4 max-h-60 overflow-y-auto"></div>
+
+                        <div id="selectedClientInfo" class="mt-4 bg-blue-50 rounded-lg p-4 hidden">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 id="selectedClientName" class="font-medium text-gray-900"></h4>
+                                    <p id="selectedClientDetails" class="text-sm text-gray-600 mt-1"></p>
+                                </div>
+                                <button id="clearClientBtn" class="text-red-600 hover:text-red-800">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Categories -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Productos y Servicios</h3>
+                            <div class="flex gap-2">
+                                <button id="showProductsBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active">
+                                    Productos
+                                </button>
+                                <button id="showServicesBtn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                                    Servicios
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Search Products/Services -->
+                        <div class="relative mb-4">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input type="text" id="itemSearch" placeholder="Buscar productos o servicios..."
+                                   class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                        </div>
+
+                        <!-- Product/Service Grid -->
+                        <div id="itemsGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                            <!-- Items will be dynamically inserted here -->
+                            <div class="text-center text-gray-500 col-span-full py-8">
+                                Cargando productos y servicios...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Cart & Checkout -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm h-auto">
+                        <!-- Cart Header -->
+                        <div class="border-b border-gray-200 p-4">
+                            <h3 class="text-lg font-semibold text-gray-800">Carrito de Compra</h3>
+                        </div>
+
+                        <!-- Cart Items -->
+                        <div id="cartItems" class="overflow-y-auto p-4" style="max-height: 350px;">
+                            <div id="emptyCartMessage" class="text-center text-gray-500 py-8">
+                                El carrito está vacío
+                            </div>
+                            <ul id="cartItemsList" class="divide-y divide-gray-200">
+                                <!-- Cart items will be dynamically inserted here -->
+                            </ul>
+                        </div>
+
+                        <!-- Cart Summary -->
+                        <div class="border-t border-gray-200 p-4 bg-gray-50 space-y-2">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>IVA (16%):</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="flex justify-between font-semibold text-lg">
+                                <span>Total:</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Options -->
+                        <div class="p-4 border-t border-gray-200 space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">
+                                    Método de Pago
+                                </label>
+                                <select id="paymentMethod" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                                    <option value="cash">Efectivo</option>
+                                    <option value="card">Tarjeta de Crédito/Débito</option>
+                                    <option value="transfer">Transferencia Bancaria</option>
+                                </select>
+                            </div>
+
+                            <!-- Cash Payment Fields (conditionally shown) -->
+                            <div id="cashPaymentFields">
+                                <div class="mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Monto Recibido
+                                    </label>
+                                    <input type="number" id="amountReceived" step="0.01" min="0" placeholder="0.00"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Cambio
+                                    </label>
+                                    <input type="text" id="change" placeholder="0.00" disabled
+                                           class="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg">
+                                </div>
+                            </div>
+
+                            <!-- Card Payment Fields (conditionally shown) -->
+                            <div id="cardPaymentFields" class="hidden">
+                                <div class="mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Últimos 4 dígitos
+                                    </label>
+                                    <input type="text" id="cardLastDigits" maxlength="4" placeholder="XXXX"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                                </div>
+                            </div>
+
+                            <!-- Transfer Payment Fields (conditionally shown) -->
+                            <div id="transferPaymentFields" class="hidden">
+                                <div class="mb-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Referencia
+                                    </label>
+                                    <input type="text" id="transferReference" placeholder="Referencia de pago"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">
+                                    Notas
+                                </label>
+                                <textarea id="saleNotes" rows="2" placeholder="Notas adicionales para esta venta..."
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"></textarea>
+                            </div>
+
+                            <button id="completePaymentBtn" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 flex items-center justify-center">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                Completar Venta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create Client Modal (Simplified version of clients.html modal) -->
+    <div id="createClientModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">Nuevo Cliente Rápido</h3>
+                <button onclick="hideModal('createClientModal')" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="quickClientForm" onsubmit="handleQuickClientSubmit(event)">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="quickFirstName" class="block text-sm font-medium text-gray-700 mb-1">
+                            Nombre *
+                        </label>
+                        <input type="text" id="quickFirstName" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="quickLastName" class="block text-sm font-medium text-gray-700 mb-1">
+                            Apellidos *
+                        </label>
+                        <input type="text" id="quickLastName" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="quickPhone" class="block text-sm font-medium text-gray-700 mb-1">
+                            Teléfono *
+                        </label>
+                        <input type="tel" id="quickPhone" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="quickEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                            Correo Electrónico
+                        </label>
+                        <input type="email" id="quickEmail"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="hideModal('createClientModal')"
+                            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Guardar y Seleccionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div id="receiptModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-2/3 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">Recibo de Venta</h3>
+                <button onclick="hideModal('receiptModal')" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="receiptContent" class="border rounded-lg p-6 bg-white">
+                <!-- Receipt content will be dynamically inserted here -->
+            </div>
+
+            <div class="mt-6 flex justify-end space-x-3">
+                <button onclick="printReceipt()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <i class="fas fa-print mr-2"></i>
+                    Imprimir
+                </button>
+                <button onclick="startNewSale()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    Nueva Venta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pos.js"></script>
+</body>
+</html>

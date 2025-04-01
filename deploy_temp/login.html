@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dermacielo - Iniciar Sesión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <!-- Login Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <!-- Logo & Title -->
+            <div class="text-center mb-8">
+                <div class="flex justify-center mb-4">
+                    <i class="fas fa-clinic-medical text-blue-600 text-4xl"></i>
+                </div>
+                <h1 class="text-2xl font-semibold text-gray-900">Dermacielo</h1>
+                <p class="text-gray-500 mt-1">Sistema de Gestión</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" name="email" required
+                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                            placeholder="usuario@dermacielo.com">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" name="password" required
+                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                            placeholder="••••••••">
+                    </div>
+                    <p id="loginError" class="text-red-600 text-xs mt-1 hidden"></p>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" name="remember"
+                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember" class="ml-2 block text-sm text-gray-700">
+                            Recordarme
+                        </label>
+                    </div>
+                    <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center mt-4 text-sm text-white">
+            © 2025 Dermacielo. Todos los derechos reservados.
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+
+            // Load users from localStorage
+            function loadUsers() {
+                return JSON.parse(localStorage.getItem('users')) || [];
+            }
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const users = loadUsers();
+
+                // Find user with matching email and password
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    // Update last login time
+                    user.lastLogin = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
+
+                    // Store current user in session
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        id: user.id,
+                        name: user.name,
+                        lastName: user.lastName,
+                        email: user.email,
+                        roleId: user.roleId,
+                        sucursalId: user.sucursalId
+                    }));
+
+                    // Redirect based on role
+                    if (user.roleId) {
+                        const roles = JSON.parse(localStorage.getItem('roles')) || [];
+                        const userRole = roles.find(r => r.id === user.roleId);
+
+                        if (userRole && userRole.name.toLowerCase().includes('admin')) {
+                            window.location.href = 'admin/dashboard.html';
+                        } else {
+                            window.location.href = 'uploads/index.html'; // Main user interface
+                        }
+                    } else {
+                        window.location.href = 'uploads/index.html'; // Default interface
+                    }
+                } else {
+                    // Show error
+                    loginError.textContent = 'Correo electrónico o contraseña incorrectos';
+                    loginError.classList.remove('hidden');
+
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                }
+            });
+
+            // Auto-fill demo credentials if there are no users yet
+            const users = loadUsers();
+            if (users.length === 0) {
+                document.getElementById('email').value = 'admin@dermacielo.com';
+                document.getElementById('password').value = 'admin123';
+            }
+        });
+    </script>
+</body>
+</html>

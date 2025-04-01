@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dermacielo - Panel de Administración</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="bg-white w-64 border-r border-gray-200 min-h-screen">
+            <div class="p-4 border-b">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-clinic-medical text-blue-600 text-2xl"></i>
+                    <h1 class="text-xl font-semibold text-gray-900">Dermacielo</h1>
+                </div>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg">
+                    <i class="fas fa-gauge-high w-5 h-5 mr-2"></i>
+                    Dashboard
+                </a>
+                <a href="roles.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user-shield w-5 h-5 mr-2 text-gray-500"></i>
+                    Roles
+                </a>
+                <a href="users.html" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-users w-5 h-5 mr-2 text-gray-500"></i>
+                    Usuarios
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-calendar w-5 h-5 mr-2 text-gray-500"></i>
+                    Citas
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-user w-5 h-5 mr-2 text-gray-500"></i>
+                    Pacientes
+                </a>
+                <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-900 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-shopping-cart w-5 h-5 mr-2 text-gray-500"></i>
+                    Ventas
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+                        <p class="text-sm text-gray-600">Estadísticas de Marzo 2025</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                                <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" alt="Admin" class="w-8 h-8 rounded-full">
+                                <span>Admin</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="p-6">
+                <!-- Monthly Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Ventas del Mes</p>
+                                <h3 id="totalSales" class="text-2xl font-semibold text-gray-900 mt-1">$0</h3>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <i class="fas fa-dollar-sign text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Servicios Realizados</p>
+                                <h3 id="totalServices" class="text-2xl font-semibold text-gray-900 mt-1">0</h3>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-lg">
+                                <i class="fas fa-clipboard-list text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Ticket Promedio</p>
+                                <h3 id="averageTicket" class="text-2xl font-semibold text-gray-900 mt-1">$0</h3>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <div>
+                                <p class="text-sm text-gray-500">Meta Mensual</p>
+                                <h3 id="monthlyProgress" class="text-2xl font-semibold text-gray-900 mt-1">0%</h3>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-lg">
+                                <i class="fas fa-trophy text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div id="progressBar" class="bg-yellow-400 h-2 rounded-full" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Tables -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Revenue Chart -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <canvas id="revenueChart" height="300"></canvas>
+                    </div>
+
+                    <!-- Service Distribution Chart -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <canvas id="serviceDistributionChart" height="300"></canvas>
+                    </div>
+                </div>
+
+                <!-- Tables Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Top Services Table -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Servicios Más Solicitados</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Servicio
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Cantidad
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Ingresos
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topServicesBody" class="bg-white divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Top Clients Table -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-4">Clientes Frecuentes</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Cliente
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Visitas
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Total Gastado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topClientsBody" class="bg-white divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[build]
+  # Directorio donde están los archivos finales
+  publish = "."
+
+# Configuración para que todas las rutas apunten a index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
