@@ -304,7 +304,22 @@ function initDocuments() {
 }
 
 function renderDocumentMosaic(docsToRender = documents) {
+    const userRoles = roles; // Assuming roles are already fetched
+    const accessibleDocuments = docsToRender.filter(doc => {
+        return !doc.rolesAccess.length || doc.rolesAccess.some(roleId => userRoles.includes(roleId));
+    });
+
+    const accessibleDocuments = docsToRender.filter(doc => {
+        return !doc.rolesAccess.length || doc.rolesAccess.some(roleId => roles.includes(roleId));
+    });
+
     const mosaic = document.getElementById('documentMosaic');
+    if (mosaic) {
+        mosaic.innerHTML = accessibleDocuments.length > 0 ?
+            accessibleDocuments.map(doc => `
+    if (mosaic) {
+        mosaic.innerHTML = accessibleDocuments.length > 0 ?
+            accessibleDocuments.map(doc => `
     if (mosaic) {
         mosaic.innerHTML = docsToRender.length > 0 ?
             docsToRender.map(doc => `
